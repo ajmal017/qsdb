@@ -1,7 +1,7 @@
 from django.contrib import admin
-from api.models import IBPricesModel
+from api.models import PAModel
 
 # Register your models here.
-admin.site.register(IBPricesModel)
+admin.site.register(PAModel)
 
 

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from django.conf.global_settings import DATETIME_INPUT_FORMATS
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,10 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
+    'plotter',
     'rest_framework',
     'ib_insync',
     'pandas',
-    'numpy'
+    'numpy',
+    'django_filters',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -73,15 +77,19 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'qsdb.wsgi.application'
+ASGI_APPLICATION = 'qsdb.routing.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'djongo',
+        'NAME': 'qsocietydb',
     }
 }
 
@@ -105,6 +113,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+DATETIME_INPUT_FORMATS += ('%Y',)
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -116,7 +126,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

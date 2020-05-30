@@ -3,7 +3,10 @@ from rest_framework import routers
 from . import views
 
 router = routers.DefaultRouter()
-router.register(r'ibprices', views.IBPricesViewSet)
+router.register(r'PA', views.PAViewSet)
+
+
+# router.register(r'^PA/(?datefrom=P<datefrom>+&+dateto=P<dateto>)/$', views.PAViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
