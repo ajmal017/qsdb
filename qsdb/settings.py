@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'numpy',
     'django_filters',
     'channels',
+    'celery',
+    'ibapi'
 ]
 
 MIDDLEWARE = [
@@ -79,6 +81,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'qsdb.wsgi.application'
 ASGI_APPLICATION = 'qsdb.routing.application'
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
@@ -133,3 +143,4 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/code/static/' 

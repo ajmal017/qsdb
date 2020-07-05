@@ -1,9 +1,10 @@
 from django.shortcuts import render
+import asyncio
 
 def index(request):
-    return render(request, 'plotter/index.html', {})
+    return render(request, 'plotter/index.html')
 
-def room(request, room_name):
-    return render(request, 'plotter/room.html', {
-        'room_name': room_name
+def stock(request, stock_name):
+    return render(request, 'plotter/stock.html', {
+        'stock_name': stock_name
     })
