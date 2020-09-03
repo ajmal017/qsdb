@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Gráfica del activo</title>
+</head>
+<body>
+    <textarea id="price" cols="100" rows="20"></textarea><br>
+    {{ stock_name|json_script:"stock-name" }}
+    <script>
+        const stockName = JSON.parse(document.getElementById('stock-name').textContent);
+
+        const stockSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/plotter/'
+            + stockName
+            + '/'
+        );
+
+        stockSocket.onopen = function(e) {
+            console.log('Conexión con socket abierta')
+                stockSocket.send(JSON.stringify({
+                    'message': stockName
+                }));
+            // Aqui se abre la gráfica y va bokeh
+        };
+
+        stockSocket.onclose = function(e) {
+            console.log('Conexión con socket cerrada');
+        };
+
+        stockSocket.onerror = function(e) {
+            console.log('La conexión con el socket tuvo un error');
+        };
+
+
+        stockSocket.onmessage = function(e) {
+            console.log('Escuchando');
+            console.log(JSON.parse(e.data));
+            data = JSON.parse(e.data)
+            document.querySelector('#price').value += (data.message + '\n');
+        };
+
+        
+    </script>
+</body>
+</html>

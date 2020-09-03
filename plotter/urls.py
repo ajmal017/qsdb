@@ -3,5 +3,5 @@ from plotter import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('<str:room_name>/', views.room, name='room'),
+    path('<str:stock_name>/', views.stock, name='stock'),
 ]
